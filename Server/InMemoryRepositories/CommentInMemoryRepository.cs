@@ -1,0 +1,68 @@
+using System;
+using Entities;
+using Contracts;
+
+namespace InMemoryRepositories;
+
+public class CommentInMemoryRepository : ICommentRepository
+{
+    List<Comment> comments = new List<Comment>();
+    public Task<Comment> AddAsync(Comment comment)
+    {
+        comment.Id = comments.Any()
+        ? comments.Max(p => p.Id) + 1
+        : 1;
+        comments.Add(comment);
+        return Task.FromResult(comment);
+    }
+
+    public Task DeleteAsync(int id)
+    {
+        Comment? commentToRemove = comments.SingleOrDefault(p => p.Id == id);
+        if (commentToRemove is null)
+        {
+            throw new InvalidOperationException($"Comment with ID'{id}' not found");
+
+        }
+        comments.Remove(commentToRemove);
+        return Task.CompletedTask;
+    }
+
+    public IQueryable<Comment> GetManyAsync()
+    {
+        return comments.AsQueryable();
+    }
+
+    public Task<IQueryable<Comment>> GetManyAsync(int postId)
+    {
+        var filteredComments = comments.Where(c => c.PostId == postId);
+        return Task.FromResult(filteredComments.AsQueryable());
+    }
+
+    public Task<Comment> GetSingleAsync(int id)
+    {
+         Comment? existingComment = comments.SingleOrDefault(p => p.Id == id);
+        if (existingComment is null)
+        {
+            throw new InvalidOperationException($"Comment with ID'{id}' not found");
+        }
+        return Task.FromResult(existingComment);
+    }
+
+    public Task UpdateAsync(Comment comment)
+    {
+         Comment? existingComment = comments.SingleOrDefault(p => p.Id == comment.Id);
+        if (existingComment is null)
+        {
+            throw new InvalidOperationException($"Comment with Id '{comment.Id}' not found");
+        }
+        comments.Remove(existingComment);
+        comments.Add(comment);
+        return Task.CompletedTask;
+    }
+
+    Task<IEnumerable<Comment>> ICommentRepository.GetManyAsync(int postId)
+    {
+        throw new NotImplementedException();
+    }
+}
