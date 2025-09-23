@@ -12,4 +12,5 @@ public interface IPostRepository
     Task<Post> GetSingleAsync(int id);
     Task<IQueryable<Post>> GetManyAsync();
 
+
 }

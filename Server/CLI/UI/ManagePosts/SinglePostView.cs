@@ -17,10 +17,10 @@ public class SinglePostView
 
     private async Task DisplayPostAsync(int postId)
     {
-        Post post = await postRepository.GetSingleAsync(postId);
+        User post = await postRepository.GetSingleAsync(postId);
         Console.WriteLine($"Post ID: {post.Id}, Title: {post.Title}, Body: {post.Body}, UserID: {post.UserId}");
         var comments = await commentRepository.GetManyAsync(postId);
-        foreach (Comment comment in comments)
+        foreach (User comment in comments)
         {
             Console.WriteLine($"Comment ID: {comment.Id}, Body: {comment.Body}, UserID: {comment.UserId}");
         }

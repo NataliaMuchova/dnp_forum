@@ -16,7 +16,7 @@ public class ManagePostsView
     private async Task displayPostAsync()
     {
         var values = await postRepository.GetManyAsync();
-        foreach (Post post in values)
+        foreach (User post in values)
         {
             Console.WriteLine($"Post ID: {post.Id}, Body: {post.Body}, UserID: {post.UserId}");
         }

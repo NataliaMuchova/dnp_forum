@@ -6,6 +6,7 @@ namespace InMemoryRepositories;
 
 public class CommentInMemoryRepository : ICommentRepository
 {
+
     List<Comment> comments = new List<Comment>();
     public Task<Comment> AddAsync(Comment comment)
     {
@@ -28,20 +29,26 @@ public class CommentInMemoryRepository : ICommentRepository
         return Task.CompletedTask;
     }
 
-    public IQueryable<Comment> GetManyAsync()
+    public Task<IQueryable<Comment>> GetManyAsync()
     {
-        return comments.AsQueryable();
+        return Task.FromResult(comments.AsQueryable());
     }
 
     public Task<IQueryable<Comment>> GetManyAsync(int postId)
     {
-        var filteredComments = comments.Where(c => c.PostId == postId);
-        return Task.FromResult(filteredComments.AsQueryable());
+        List<Comment> filteredComment = new List<Comment>();
+        foreach (Comment comment in comments)
+        {
+            if (comment.PostId == postId) filteredComment.Add(comment);
+
+        }
+        
+        return Task.FromResult(filteredComment.AsQueryable());
     }
 
     public Task<Comment> GetSingleAsync(int id)
     {
-         Comment? existingComment = comments.SingleOrDefault(p => p.Id == id);
+        Comment? existingComment = comments.SingleOrDefault(p => p.Id == id);
         if (existingComment is null)
         {
             throw new InvalidOperationException($"Comment with ID'{id}' not found");
@@ -51,7 +58,7 @@ public class CommentInMemoryRepository : ICommentRepository
 
     public Task UpdateAsync(Comment comment)
     {
-         Comment? existingComment = comments.SingleOrDefault(p => p.Id == comment.Id);
+        Comment? existingComment = comments.SingleOrDefault(p => p.Id == comment.Id);
         if (existingComment is null)
         {
             throw new InvalidOperationException($"Comment with Id '{comment.Id}' not found");

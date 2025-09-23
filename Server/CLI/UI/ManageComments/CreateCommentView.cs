@@ -15,7 +15,7 @@ public class CreateCommentView
 
     public async Task AddCommentAsync(string body, int userId, int postId)
     {
-        Comment created = await commentRepository.AddAsync(new Comment(body, userId, postId));
+        User created = await commentRepository.AddAsync(new User(body, userId, postId));
         Console.WriteLine($"Post '{created.Body}' created with ID: {created.UserId}");
     }
 

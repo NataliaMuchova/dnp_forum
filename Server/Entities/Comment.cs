@@ -2,8 +2,7 @@ using System;
 
 namespace Entities;
 
-public class Comment
-{
+public class Comment{
     public Comment(string body, int userId, int postId)
     {
         Body = body;

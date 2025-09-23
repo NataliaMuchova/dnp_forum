@@ -29,9 +29,9 @@ public class PostInMemoryRepository : IPostRepository
         return Task.CompletedTask;
     }
 
-    public async Task<IQueryable<Post>> GetManyAsync()
+    public Task<IQueryable<Post>> GetManyAsync()
     {
-        return await Task.FromResult(posts.AsQueryable());
+        return Task.FromResult(posts.AsQueryable());
     }
 
     public Task<Post> GetSingleAsync(int id)
@@ -43,7 +43,7 @@ public class PostInMemoryRepository : IPostRepository
         }
         return Task.FromResult(existingPost);
     }
-    
+
     public Task UpdateAsync(Post post)
     {
         Post? existingPost = posts.SingleOrDefault(p => p.Id == post.Id);
@@ -56,5 +56,5 @@ public class PostInMemoryRepository : IPostRepository
         return Task.CompletedTask;
     }
 
-
+   
 }
