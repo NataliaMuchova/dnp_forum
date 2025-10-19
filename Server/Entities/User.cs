@@ -4,16 +4,14 @@ namespace Entities;
 
 public class User
 {
-    private string username;
-    private string password;
+    public int Id { get; set; }
+    public string Username { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 
+    public User() { } //Json
     public User(string username, string password)
     {
         Username = username;
         Password = password;
     }
-
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public int Id{ get; set; }
 }

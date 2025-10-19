@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Contracts;
 using Entities;
+using FileRepositories;
 
 namespace CLI.UI.ManagePosts;
 
@@ -16,7 +17,7 @@ public class ManagePostsView
     private async Task displayPostAsync()
     {
         var values = await postRepository.GetManyAsync();
-        foreach (User post in values)
+        foreach (Post post in values)
         {
             Console.WriteLine($"Post ID: {post.Id}, Body: {post.Body}, UserID: {post.UserId}");
         }

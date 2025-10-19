@@ -1,7 +1,7 @@
 using System;
 using Contracts;
 using Entities;
-using InMemoryRepositories;
+using FileRepositories;
 
 namespace CLI.UI.ManagePosts;
 
@@ -16,7 +16,7 @@ public class CreatePostView
 
     private async Task AddPostAsync(string title, string body, int userId)
     {
-        User Created = await postRepository.AddAsync(new User(title, body, userId));
+        Post Created = await postRepository.AddAsync(new Post(title, body, userId));
         Console.WriteLine($"Post '{Created.Title}' created with ID: {Created.Id}");
     }
 

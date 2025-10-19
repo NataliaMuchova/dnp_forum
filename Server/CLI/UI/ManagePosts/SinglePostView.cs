@@ -1,6 +1,7 @@
 using System;
 using Contracts;
 using Entities;
+using FileRepositories;
 
 namespace CLI.UI.ManagePosts;
 
@@ -17,10 +18,10 @@ public class SinglePostView
 
     private async Task DisplayPostAsync(int postId)
     {
-        User post = await postRepository.GetSingleAsync(postId);
+        Post post = await postRepository.GetSingleAsync(postId);
         Console.WriteLine($"Post ID: {post.Id}, Title: {post.Title}, Body: {post.Body}, UserID: {post.UserId}");
         var comments = await commentRepository.GetManyAsync(postId);
-        foreach (User comment in comments)
+        foreach (Comment comment in comments)
         {
             Console.WriteLine($"Comment ID: {comment.Id}, Body: {comment.Body}, UserID: {comment.UserId}");
         }

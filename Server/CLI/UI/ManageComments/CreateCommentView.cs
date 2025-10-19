@@ -8,27 +8,36 @@ public class CreateCommentView
 {
     private readonly ICommentRepository commentRepository;
 
-    public CreateCommentView(ICommentRepository commnetRepository)
+    public CreateCommentView(ICommentRepository commentRepository)
     {
-        this.commentRepository = commentRepository;
+        this.commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
     }
 
     public async Task AddCommentAsync(string body, int userId, int postId)
     {
-        User created = await commentRepository.AddAsync(new User(body, userId, postId));
-        Console.WriteLine($"Post '{created.Body}' created with ID: {created.UserId}");
+        var comment = new Comment { Body = body, UserId = userId, PostId = postId };
+        var created = await commentRepository.AddAsync(comment);
+        Console.WriteLine($"Comment '{created.Body}' created with ID: {created.Id}");
     }
 
     public async Task StartAsync()
     {
         Console.WriteLine("Enter comment body: ");
-        string body = Console.ReadLine();
+        string? body = Console.ReadLine() ?? string.Empty;
 
         Console.WriteLine("Enter user ID: ");
-        int userId = int.Parse(Console.ReadLine());
+        if (!int.TryParse(Console.ReadLine(), out var userId))
+        {
+            Console.WriteLine("Invalid user id.");
+            return;
+        }
 
         Console.WriteLine("Enter post ID: ");
-        int postId = int.Parse(Console.ReadLine());
+        if (!int.TryParse(Console.ReadLine(), out var postId))
+        {
+            Console.WriteLine("Invalid post id.");
+            return;
+        }
 
         await AddCommentAsync(body, userId, postId);
     }
