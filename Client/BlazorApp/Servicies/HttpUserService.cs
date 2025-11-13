@@ -25,7 +25,7 @@ public class HttpUserService : IUserService
         return JsonSerializer.Deserialize<UserDto>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
 
     public async Task DeleteUserAsync(int id)
@@ -49,7 +49,7 @@ public class HttpUserService : IUserService
         return JsonSerializer.Deserialize<GetUserDto>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
     public async Task<List<GetUserDto>> GetUsersAsync()
     {
@@ -62,7 +62,7 @@ public class HttpUserService : IUserService
         return JsonSerializer.Deserialize<List<GetUserDto>>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
     public async Task UpdateUserAsync(int id, UpdateUserDto request)
     {

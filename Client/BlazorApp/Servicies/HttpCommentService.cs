@@ -22,7 +22,7 @@ public class HttpCommentService : ICommentService
         return JsonSerializer.Deserialize<CommentDto>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
 
     public async Task DeleteCommentAsync(int id)
@@ -45,7 +45,7 @@ public class HttpCommentService : ICommentService
         return JsonSerializer.Deserialize<CommentDto>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
     public async Task<List<CommentDto>> GetCommentsAsync()
     {
@@ -58,7 +58,7 @@ public class HttpCommentService : ICommentService
         return JsonSerializer.Deserialize<List<CommentDto>>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
     public async Task UpdateCommentAsync(int id, UpdateCommentDto request)
     {

@@ -22,7 +22,7 @@ public class HttpPostService : IPostService
         return JsonSerializer.Deserialize<PostDto>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
     public async Task DeletePostAsync(int id)
     {
@@ -44,7 +44,7 @@ public class HttpPostService : IPostService
         return JsonSerializer.Deserialize<PostDto>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
     public async Task<List<PostDto>> GetPostsAsync()
     {
@@ -57,7 +57,7 @@ public class HttpPostService : IPostService
         return JsonSerializer.Deserialize<List<PostDto>>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
-        });
+        })!;
     }
     public async Task UpdatePostAsync(int id, UpdatePostDto request)
     {

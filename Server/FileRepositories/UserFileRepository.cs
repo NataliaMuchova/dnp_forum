@@ -82,6 +82,25 @@ public class UserFileRepository : IUserRepository
         }
         users.Remove(existingUser);
         users.Add(user);
+    }
 
+    public async Task<User?> GetSingleAsync(object username, string password)
+    {
+        List<User> users = await readUsers();
+        User? existingUser = users.SingleOrDefault(p => p.Username.Equals(username) && p.Password.Equals(password));
+
+        return existingUser;
+    }
+
+    public Task<User> GetSingleAsync(string username, string password)
+    {
+        List<User> users = readUsers().Result;
+        User? existingUser = users.SingleOrDefault(p => p.Username.Equals(username) && p.Password.Equals(password));
+        if (existingUser is null)
+        {
+            throw new InvalidOperationException($"User with username '{username}' not found");
+        }
+
+        return Task.FromResult(existingUser);
     }
 }
