@@ -14,4 +14,7 @@ public class User
         Username = username;
         Password = password;
     }
+    
+    // for database navigation property
+    public List<Post> Posts { get; set; }
 }

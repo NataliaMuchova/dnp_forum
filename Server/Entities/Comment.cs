@@ -16,4 +16,7 @@ public class Comment{
         UserId = userId;
         PostId = postId;
     }
+    
+    //database navigation property
+    public Post Post { get; set; }
 }

@@ -8,6 +8,8 @@ public class Post
     public string Title { get; set; } = string.Empty;
     public string Body { get; set; } = string.Empty;
     public int UserId { get; set; }
+    //foreign key
+
 
     public Post() { }
     public Post(string title, string body, int userId)
@@ -16,4 +18,8 @@ public class Post
         Body = body;
         UserId = userId;
     }
+
+    //database naviagation property
+    public User User { get; set;}
+    public List<Comment> Comments { get; set; }
 }
